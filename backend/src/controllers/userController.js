@@ -98,3 +98,23 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+// Fetch all teachers (Admin only)
+exports.fetchAllTeachers = async (req, res) => {
+  try {
+    const teachers = await User.find({ role: "Teacher" }).select("-password");
+    res.status(200).json(teachers);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+
+// Fetch all students (Admin or Teacher)
+exports.fetchAllStudents = async (req, res) => {
+  try {
+    const students = await User.find({ role: "Student" }).select("-password");
+    res.status(200).json(students);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};

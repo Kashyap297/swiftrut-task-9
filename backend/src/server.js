@@ -4,6 +4,7 @@ const Config = require("./config");
 const cors = require("cors");
 const path = require("path");
 const userRoutes = require("./routes/userRoutes");
+const courseRoutes = require("./routes/courseRoutes");
 
 const app = express();
 
@@ -22,6 +23,7 @@ dbConnection();
 
 // API routes
 app.use("/api/users", userRoutes); // User-related routes
+app.use("/api/courses", courseRoutes);
 
 // Error Handling
 app.use((req, res, next) => {

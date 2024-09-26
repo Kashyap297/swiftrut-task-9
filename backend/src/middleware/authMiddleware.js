@@ -38,3 +38,11 @@ exports.teacher = (req, res, next) => {
   }
   next();
 };
+
+exports.adminOrTeacher = (req, res, next) => {
+  if (req.user.role === "Admin" || req.user.role === "Teacher") {
+    next();
+  } else {
+    return res.status(403).json({ message: "Access denied" });
+  }
+};

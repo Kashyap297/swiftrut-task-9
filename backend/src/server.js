@@ -3,6 +3,7 @@ const dbConnection = require("./config/db");
 const Config = require("./config");
 const cors = require("cors");
 const path = require("path");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
@@ -20,6 +21,12 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 dbConnection();
 
 // API routes
+app.use("/api/users", userRoutes); // User-related routes
+
+// Error Handling
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Route not found" });
+});
 
 app.listen(PORT, (err) => {
   if (err) {

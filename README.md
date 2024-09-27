@@ -8,6 +8,8 @@ https://swiftrut-task-9.onrender.com
 3. npm i 
 4. npm start / npm run dev
 
+running on : http://localhost:8000/
+
 * run frontend code
 1. Git Clone
 2. cd frontend

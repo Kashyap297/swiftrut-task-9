@@ -6,21 +6,44 @@ import StudentDashboard from "./pages/StudentDashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import HomePage from "./pages/HomePage";
-import Sidebar from "./components/Sidebar"; // Import Sidebar
+import Sidebar from "./components/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AuthRedirect from "./components/AuthRedirect"; // Import AuthRedirect
 import AuthProvider from "./context/AuthContext";
+import CreateTeacher from "./pages/CreateTeacher"; // New import
+import AllTeachers from "./pages/AllTeachers"; // New import
+import CreateCourse from "./pages/CreateCourse"; // New import
+import AllCourses from "./pages/AllCourses"; // New import
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
         <div className="flex">
-          <Sidebar /> {/* Sidebar */}
+          <Sidebar />
           <div className="flex-grow">
             <Routes>
-              <Route path="/" element={<HomePage />} /> {/* Handle homepage */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/" element={<HomePage />} />
+
+              {/* If logged in, redirect user from login/register */}
+              <Route
+                path="/login"
+                element={
+                  <AuthRedirect>
+                    <Login />
+                  </AuthRedirect>
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <AuthRedirect>
+                    <Register />
+                  </AuthRedirect>
+                }
+              />
+
+              {/* Protected Routes */}
               <Route
                 path="/admin"
                 element={
@@ -42,6 +65,40 @@ const App = () => {
                 element={
                   <ProtectedRoute role="Student">
                     <StudentDashboard />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* New routes */}
+              <Route
+                path="/create-teacher"
+                element={
+                  <ProtectedRoute role="Admin">
+                    <CreateTeacher />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/teachers"
+                element={
+                  <ProtectedRoute role="Admin">
+                    <AllTeachers />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/create-course"
+                element={
+                  <ProtectedRoute role="Admin">
+                    <CreateCourse />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/courses"
+                element={
+                  <ProtectedRoute role="Admin">
+                    <AllCourses />
                   </ProtectedRoute>
                 }
               />

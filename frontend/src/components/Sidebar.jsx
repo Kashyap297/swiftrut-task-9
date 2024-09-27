@@ -1,10 +1,22 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import {
+  FaChalkboardTeacher,
+  FaBook,
+  FaSignOutAlt,
+  FaUser,
+  FaAngleDown,
+  FaAngleUp,
+} from "react-icons/fa"; // Import icons
 
 const Sidebar = () => {
   const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // State to toggle the dropdowns
+  const [teacherDropdownOpen, setTeacherDropdownOpen] = useState(false);
+  const [courseDropdownOpen, setCourseDropdownOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -19,39 +31,93 @@ const Sidebar = () => {
       {user ? (
         <>
           {/* Show User Info */}
-          <p className="mb-4">Hello, {user.name}</p>
+          <p className="mb-4 flex items-center">
+            <FaUser className="mr-2" /> Hello, {user.name}
+          </p>
 
           {/* Admin Dropdown */}
           {user.role === "Admin" && (
             <div className="mb-6">
-              <h3 className="font-semibold">Admin Options</h3>
-              <ul className="mt-2">
-                <li className="mb-2">
-                  <Link
-                    to="/teachers"
-                    className="text-blue-300 hover:underline"
-                  >
-                    Teachers
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link
-                    to="/students"
-                    className="text-blue-300 hover:underline"
-                  >
-                    Students
-                  </Link>
-                </li>
-              </ul>
+              {/* Manage Teacher Dropdown */}
+              <div className="mb-4">
+                <h3
+                  className="font-semibold cursor-pointer flex justify-between items-center"
+                  onClick={() => setTeacherDropdownOpen(!teacherDropdownOpen)}
+                >
+                  <span className="flex items-center">
+                    <FaChalkboardTeacher className="mr-2" />
+                    Manage Teacher
+                  </span>
+                  <span>
+                    {teacherDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}
+                  </span>
+                </h3>
+                {teacherDropdownOpen && (
+                  <ul className="mt-2 pl-4">
+                    <li className="mb-2">
+                      <Link
+                        to="/create-teacher"
+                        className="text-blue-300 hover:underline"
+                      >
+                        Create Teacher
+                      </Link>
+                    </li>
+                    <li className="mb-2">
+                      <Link
+                        to="/teachers"
+                        className="text-blue-300 hover:underline"
+                      >
+                        See All Teachers
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+
+              {/* Manage Course Dropdown */}
+              <div>
+                <h3
+                  className="font-semibold cursor-pointer flex justify-between items-center"
+                  onClick={() => setCourseDropdownOpen(!courseDropdownOpen)}
+                >
+                  <span className="flex items-center">
+                    <FaBook className="mr-2" />
+                    Manage Course
+                  </span>
+                  <span>
+                    {courseDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}
+                  </span>
+                </h3>
+                {courseDropdownOpen && (
+                  <ul className="mt-2 pl-4">
+                    <li className="mb-2">
+                      <Link
+                        to="/create-course"
+                        className="text-blue-300 hover:underline"
+                      >
+                        Create Course
+                      </Link>
+                    </li>
+                    <li className="mb-2">
+                      <Link
+                        to="/courses"
+                        className="text-blue-300 hover:underline"
+                      >
+                        See All Courses
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
             </div>
           )}
 
           {/* Logout Button */}
           <button
             onClick={handleLogout}
-            className="bg-red-500 py-2 px-4 rounded-lg mt-4 hover:bg-red-600"
+            className="bg-red-500 py-2 px-4 rounded-lg mt-4 hover:bg-red-600 flex items-center"
           >
-            Logout
+            <FaSignOutAlt className="mr-2" /> Logout
           </button>
         </>
       ) : (

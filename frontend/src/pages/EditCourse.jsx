@@ -15,33 +15,41 @@ const EditCourse = () => {
   });
 
   const [teachers, setTeachers] = useState([]); // State to store all available teachers
+  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [error, setError] = useState(""); // State to manage errors
 
   // Fetch available teachers for the teacher dropdown
   const fetchTeachers = async () => {
     try {
-      const response = await api.get("/users/teachers"); // Assuming you have an endpoint to get all teachers
+      const response = await api.get("/users/teachers");
       setTeachers(response.data);
     } catch (error) {
-      console.error("Failed to fetch teachers");
+      console.error("Failed to fetch teachers", error);
+      setError("Failed to fetch teachers.");
     }
   };
 
   // Fetch the course details for editing
   useEffect(() => {
+    console.log(`Fetching course with ID: ${id}`); // Log the ID for debugging
+
     const fetchCourse = async () => {
       try {
         const response = await api.get(`/courses/${id}`);
+        console.log("Fetched course data:", response.data); // Log the course data for debugging
         setCourse({
-          title: response.data.title,
-          description: response.data.description,
+          title: response.data.title || "",
+          description: response.data.description || "",
           startDate: new Date(response.data.startDate)
             .toISOString()
             .split("T")[0],
           endDate: new Date(response.data.endDate).toISOString().split("T")[0],
           teacher: response.data.teacher?._id || "", // Set teacher ID if it exists
         });
+        setLoading(false); // Set loading to false after data is loaded
       } catch (error) {
-        console.error("Failed to load course");
+        console.error("Failed to load course", error);
+        setError("Failed to load course.");
       }
     };
     fetchCourse();
@@ -65,13 +73,19 @@ const EditCourse = () => {
       navigate("/courses");
     } catch (error) {
       console.error("Failed to update course", error);
-      alert("Failed to update course");
+      setError("Failed to update course.");
     }
   };
+
+  if (loading) {
+    return <div>Loading course data...</div>; // Show a loading message while fetching data
+  }
 
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-4">Edit Course</h1>
+      {error && <p className="text-red-500 mb-4">{error}</p>}{" "}
+      {/* Show errors if any */}
       <form onSubmit={handleSubmit}>
         {/* Title */}
         <div className="mb-4">

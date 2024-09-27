@@ -14,7 +14,8 @@ const {
   enrollInCourse,
   removeStudentFromCourse,
   assignGrade, // New function to assign grades
-  getGrades, // New function to get student's grades
+  getGrades,
+  getCourseById, // New function to get student's grades
 } = require("../controllers/courseController");
 
 const router = express.Router();
@@ -29,6 +30,9 @@ router.get("/", protect, getAllCourses);
 
 // Student enrolls in a course
 router.post("/:id/enroll", protect, enrollInCourse); // Student enrolls in a course
+
+// routes/courseRoutes.js
+router.get("/:id", protect, getCourseById); // Make sure this route exists and matches the frontend request
 
 // Admin removes a student from a course
 router.delete(

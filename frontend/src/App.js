@@ -14,6 +14,7 @@ import CreateTeacher from "./pages/CreateTeacher"; // New import
 import AllTeachers from "./pages/AllTeachers"; // New import
 import CreateCourse from "./pages/CreateCourse"; // New import
 import AllCourses from "./pages/AllCourses"; // New import
+import EditCourse from "./pages/EditCourse";
 
 const App = () => {
   return (
@@ -91,6 +92,14 @@ const App = () => {
                 element={
                   <ProtectedRoute role="Admin">
                     <CreateCourse />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/edit-course/:id"
+                element={
+                  <ProtectedRoute role="Admin">
+                    <EditCourse />
                   </ProtectedRoute>
                 }
               />

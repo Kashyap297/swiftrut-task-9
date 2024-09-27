@@ -50,6 +50,14 @@ exports.getAllCourses = async (req, res) => {
     res.status(500).json({ message: "Server Error", error });
   }
 };
+exports.getCourseById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id).populate("teacher");
+    res.status(200).json(course);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
 
 // Student enrolls in a course
 exports.enrollInCourse = async (req, res) => {

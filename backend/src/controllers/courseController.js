@@ -170,3 +170,22 @@ exports.getGrades = async (req, res) => {
     res.status(500).json({ message: "Server Error", error });
   }
 };
+// Fetch courses assigned to a specific teacher
+exports.getCoursesForTeacher = async (req, res) => {
+  try {
+    // Find courses where the teacher is the logged-in user (req.user._id)
+    const courses = await Course.find({ teacher: req.user._id }).populate(
+      "students"
+    );
+
+    if (!courses.length) {
+      return res
+        .status(404)
+        .json({ message: "No courses assigned to this teacher" });
+    }
+
+    res.status(200).json(courses);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};

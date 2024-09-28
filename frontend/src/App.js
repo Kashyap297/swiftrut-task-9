@@ -16,6 +16,7 @@ import CreateCourse from "./pages/CreateCourse"; // New import
 import AllCourses from "./pages/AllCourses"; // New import
 import EditCourse from "./pages/EditCourse";
 import AllStudents from "./pages/AllStudents"; // New import for students
+import ViewAssignCourse from "./pages/ViewAssignCourse";
 
 const App = () => {
   return (
@@ -26,7 +27,6 @@ const App = () => {
           <div className="flex-grow">
             <Routes>
               <Route path="/" element={<HomePage />} />
-
               {/* If logged in, redirect user from login/register */}
               <Route
                 path="/login"
@@ -44,7 +44,6 @@ const App = () => {
                   </AuthRedirect>
                 }
               />
-
               {/* Protected Routes */}
               <Route
                 path="/admin"
@@ -63,6 +62,14 @@ const App = () => {
                 }
               />
               <Route
+                path="/assigned-courses"
+                element={
+                  <ProtectedRoute role="Teacher">
+                    <ViewAssignCourse />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="/student"
                 element={
                   <ProtectedRoute role="Student">
@@ -70,7 +77,6 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
-
               {/* New routes */}
               <Route
                 path="/create-teacher"

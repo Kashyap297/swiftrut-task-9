@@ -161,6 +161,67 @@ const Sidebar = () => {
             </div>
           )}
 
+          {/* Teacher Dropdown */}
+          {user.role === "Teacher" && (
+            <div className="mb-6">
+              {/* View Assigned Courses */}
+              <div className="mb-4">
+                <h3
+                  className="font-semibold cursor-pointer flex justify-between items-center"
+                  onClick={() => setCourseDropdownOpen(!courseDropdownOpen)}
+                >
+                  <span className="flex items-center">
+                    <FaBook className="mr-2" />
+                    Assigned Courses
+                  </span>
+                  <span>
+                    {courseDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}
+                  </span>
+                </h3>
+                {courseDropdownOpen && (
+                  <ul className="mt-2 pl-4">
+                    <li className="mb-2">
+                      <Link
+                        to="/assigned-courses"
+                        className="text-blue-300 hover:underline"
+                      >
+                        View Assigned Courses
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+
+              {/* Manage Student Dropdown */}
+              <div>
+                <h3
+                  className="font-semibold cursor-pointer flex justify-between items-center"
+                  onClick={() => setStudentDropdownOpen(!studentDropdownOpen)}
+                >
+                  <span className="flex items-center">
+                    <FaUserGraduate className="mr-2" />
+                    Manage Student
+                  </span>
+                  <span>
+                    {studentDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}
+                  </span>
+                </h3>
+                {studentDropdownOpen && (
+                  <ul className="mt-2 pl-4">
+                    <li className="mb-2">
+                      <Link
+                        to="/students"
+                        className="text-blue-300 hover:underline"
+                      >
+                        See All Students
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Logout Button */}
           <button
             onClick={handleLogout}

@@ -15,7 +15,8 @@ const {
   removeStudentFromCourse,
   assignGrade, // New function to assign grades
   getGrades,
-  getCourseById, // New function to get student's grades
+  getCourseById,
+  getCoursesForTeacher, // New function to get student's grades
 } = require("../controllers/courseController");
 
 const router = express.Router();
@@ -46,5 +47,8 @@ router.post("/:courseId/assign-grade", protect, teacher, assignGrade); // Only t
 
 // Students view their grades
 router.get("/:courseId/grades", protect, getGrades); // Only students can view their own grades
+
+// Fetch courses assigned to the logged-in teacher
+router.get("/teacher/courses", protect, teacher, getCoursesForTeacher);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "https://swiftrut-task-9.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {

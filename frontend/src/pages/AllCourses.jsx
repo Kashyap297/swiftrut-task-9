@@ -19,7 +19,6 @@ const AllCourses = () => {
   }, []);
 
   const handleEdit = (courseId) => {
-    // Navigate to an Edit Course page (you'll need to create this page)
     navigate(`/edit-course/${courseId}`);
   };
 
@@ -37,35 +36,47 @@ const AllCourses = () => {
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-4">All Courses</h1>
-      <div className="grid grid-cols-1 gap-4">
+    <div className="max-w-7xl mx-auto p-8">
+      <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">
+        All Courses
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (
           <div
             key={course._id}
-            className="bg-white p-4 rounded-lg shadow-md border"
+            className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 hover:shadow-2xl transition-shadow duration-300"
           >
-            <h2 className="text-xl font-bold">{course.title}</h2>
-            <p>Description: {course.description}</p>
-            <p>
-              Start Date: {new Date(course.startDate).toLocaleDateString()} -
-              End Date: {new Date(course.endDate).toLocaleDateString()}
-            </p>
-            <p>Teacher: {course.teacher?.name}</p>
-
-            <div className="mt-4 flex space-x-2">
-              <button
-                onClick={() => handleEdit(course._id)}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(course._id)}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-              >
-                Delete
-              </button>
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                {course.title}
+              </h2>
+              <p className="text-gray-600 mb-4">{course.description}</p>
+              <p className="text-sm text-gray-500 mb-1">
+                <strong>Start Date:</strong>{" "}
+                {new Date(course.startDate).toLocaleDateString()}
+              </p>
+              <p className="text-sm text-gray-500 mb-4">
+                <strong>End Date:</strong>{" "}
+                {new Date(course.endDate).toLocaleDateString()}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Teacher:</strong>{" "}
+                {course.teacher?.name || "Not assigned"}
+              </p>
+              <div className="mt-4 flex justify-between">
+                <button
+                  onClick={() => handleEdit(course._id)}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(course._id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         ))}

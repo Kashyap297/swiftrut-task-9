@@ -19,10 +19,9 @@ const EnrolledCourses = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
       setCourses(data);
     } catch (error) {
-      setError("Failed to fetch enrolled courses.");
+      setError("Not yet enrolled in any course.");
     } finally {
       setLoading(false);
     }

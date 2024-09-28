@@ -36,7 +36,13 @@ const EnrollStudent = () => {
       await api.post(`/courses/${selectedCourse}/enroll-student`, {
         studentId: selectedStudent,
       });
+
+      // Set success message
       setMessage("Student enrolled successfully!");
+
+      // Clear the dropdowns
+      setSelectedStudent(""); // Reset selected student
+      setSelectedCourse(""); // Reset selected course
     } catch (error) {
       setMessage("Failed to enroll student.");
     }

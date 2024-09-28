@@ -21,20 +21,23 @@ const AllStudents = () => {
     fetchStudents();
   }, []);
 
-  if (loading) return <p>Loading students...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading)
+    return <p className="text-center text-gray-500">Loading students...</p>;
+  if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">All Students</h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto border-collapse border border-gray-200 shadow-md">
-          <thead>
-            <tr className="bg-gray-800 text-white">
-              <th className="px-4 py-2 border border-gray-300">#</th>
-              <th className="px-4 py-2 border border-gray-300">Name</th>
-              <th className="px-4 py-2 border border-gray-300">Email</th>
-              <th className="px-4 py-2 border border-gray-300">Role</th>
+    <div className="max-w-6xl mx-auto p-8">
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+        All Students
+      </h2>
+      <div className="overflow-x-auto shadow-md rounded-lg">
+        <table className="min-w-full text-sm text-left text-gray-500">
+          <thead className="text-xs text-white uppercase bg-gray-800">
+            <tr>
+              <th className="px-6 py-3">#</th>
+              <th className="px-6 py-3">Name</th>
+              <th className="px-6 py-3">Email</th>
+              <th className="px-6 py-3">Role</th>
             </tr>
           </thead>
           <tbody>
@@ -42,21 +45,15 @@ const AllStudents = () => {
               <tr
                 key={student._id}
                 className={`${
-                  index % 2 === 0 ? "bg-white" : "bg-gray-100"
-                } hover:bg-gray-200`}
+                  index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                } hover:bg-gray-100`}
               >
-                <td className="px-4 py-2 border border-gray-300 text-center">
-                  {index + 1}
-                </td>
-                <td className="px-4 py-2 border border-gray-300">
+                <td className="px-6 py-4 text-center">{index + 1}</td>
+                <td className="px-6 py-4 text-gray-900 font-medium">
                   {student.name}
                 </td>
-                <td className="px-4 py-2 border border-gray-300">
-                  {student.email}
-                </td>
-                <td className="px-4 py-2 border border-gray-300">
-                  {student.role}
-                </td>
+                <td className="px-6 py-4">{student.email}</td>
+                <td className="px-6 py-4 text-green-600">{student.role}</td>
               </tr>
             ))}
           </tbody>

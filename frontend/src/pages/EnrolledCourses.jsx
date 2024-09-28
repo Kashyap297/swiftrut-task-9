@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import api from "../api/api";
 
 const EnrolledCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // Add error state
 
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
-      const { data } = await api.get("/courses/student/enrolled");
-      setCourses(data);
-      setLoading(false);
+      try {
+        const { data } = await api.get("/courses/student/enrolled");
+        setCourses(data);
+        setLoading(false);
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          // If 404 error occurs, it means no courses are enrolled
+          setCourses([]); // Empty courses array
+        } else {
+          setError("Failed to fetch enrolled courses. Please try again.");
+        }
+        setLoading(false);
+      }
     };
 
     fetchEnrolledCourses();
@@ -23,12 +33,14 @@ const EnrolledCourses = () => {
       </h1>
       {loading ? (
         <p className="text-center text-lg text-gray-500">Loading...</p>
+      ) : error ? (
+        <p className="text-center text-lg text-red-500">{error}</p>
       ) : courses.length === 0 ? (
         <p className="text-center text-lg text-gray-500">
           You have not enrolled in any courses yet.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {courses.map((course) => (
             <div
               key={course._id}
@@ -42,14 +54,20 @@ const EnrolledCourses = () => {
               <p className="text-sm text-gray-500">
                 End Date: {new Date(course.endDate).toLocaleDateString()}
               </p>
-              <div className="mt-6">
-                <Link
-                  to={`/course/${course._id}/grades`}
-                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 block text-center"
-                >
-                  View Grade
-                </Link>
-              </div>
+
+              {/* Show Grade if exists */}
+              {course.grades && course.grades.length > 0 ? (
+                <div className="mt-4">
+                  <p className="text-lg text-green-600">
+                    Grade: {course.grades[0].grade} marks given by{" "}
+                    {course.teacher?.name}
+                  </p>
+                </div>
+              ) : (
+                <p className="text-sm text-gray-500 mt-4">
+                  Grade not yet assigned.
+                </p>
+              )}
             </div>
           ))}
         </div>

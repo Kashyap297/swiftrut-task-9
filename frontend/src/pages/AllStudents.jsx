@@ -27,13 +27,41 @@ const AllStudents = () => {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">All Students</h2>
-      <ul>
-        {students.map((student) => (
-          <li key={student._id} className="mb-2">
-            {student.name} ({student.email})
-          </li>
-        ))}
-      </ul>
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto border-collapse border border-gray-200 shadow-md">
+          <thead>
+            <tr className="bg-gray-800 text-white">
+              <th className="px-4 py-2 border border-gray-300">#</th>
+              <th className="px-4 py-2 border border-gray-300">Name</th>
+              <th className="px-4 py-2 border border-gray-300">Email</th>
+              <th className="px-4 py-2 border border-gray-300">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {students.map((student, index) => (
+              <tr
+                key={student._id}
+                className={`${
+                  index % 2 === 0 ? "bg-white" : "bg-gray-100"
+                } hover:bg-gray-200`}
+              >
+                <td className="px-4 py-2 border border-gray-300 text-center">
+                  {index + 1}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {student.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {student.email}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {student.role}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

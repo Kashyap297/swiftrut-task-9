@@ -17,18 +17,40 @@ const AllTeachers = () => {
   }, []);
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-4">All Teachers</h1>
-      <div className="grid grid-cols-1 gap-4">
-        {teachers.map((teacher) => (
-          <div
-            key={teacher._id}
-            className="bg-white p-4 rounded-lg shadow-md border"
-          >
-            <h2 className="text-xl font-bold">{teacher.name}</h2>
-            <p>Email: {teacher.email}</p>
-          </div>
-        ))}
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-4">All Teachers</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto border-collapse border border-gray-200 shadow-md">
+          <thead>
+            <tr className="bg-gray-800 text-white">
+              <th className="px-4 py-2 border border-gray-300">#</th>
+              <th className="px-4 py-2 border border-gray-300">Name</th>
+              <th className="px-4 py-2 border border-gray-300">Email</th>
+              <th className="px-4 py-2 border border-gray-300">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {teachers.map((teacher, index) => (
+              <tr
+                key={teacher._id}
+                className={`${
+                  index % 2 === 0 ? "bg-white" : "bg-gray-100"
+                } hover:bg-gray-200`}
+              >
+                <td className="px-4 py-2 border border-gray-300 text-center">
+                  {index + 1}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {teacher.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {teacher.email}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">Teacher</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

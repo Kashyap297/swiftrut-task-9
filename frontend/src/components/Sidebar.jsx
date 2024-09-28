@@ -9,6 +9,7 @@ import {
   FaAngleDown,
   FaAngleUp,
   FaUserGraduate, // Import student icon
+  FaTachometerAlt, // Dashboard icon
 } from "react-icons/fa"; // Import icons
 
 const Sidebar = () => {
@@ -36,6 +37,24 @@ const Sidebar = () => {
           <p className="mb-4 flex items-center">
             <FaUser className="mr-2" /> Hello, {user.name}
           </p>
+
+          {/* Dashboard Link */}
+          <div className="mb-6">
+            <h3 className="font-semibold cursor-pointer flex justify-between items-center">
+              <Link
+                to={
+                  user.role === "Admin"
+                    ? "/admin"
+                    : user.role === "Teacher"
+                    ? "/teacher"
+                    : "/student"
+                }
+                className="flex items-center text-blue-300 hover:underline"
+              >
+                <FaTachometerAlt className="mr-2" /> Dashboard
+              </Link>
+            </h3>
+          </div>
 
           {/* Admin Dropdown */}
           {user.role === "Admin" && (
@@ -133,7 +152,7 @@ const Sidebar = () => {
                         to="/students"
                         className="text-blue-300 hover:underline"
                       >
-                        View Students
+                        See All Students
                       </Link>
                     </li>
                   </ul>

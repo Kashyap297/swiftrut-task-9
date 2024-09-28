@@ -6,6 +6,12 @@ The Education Management System (EMS) is a full-stack application designed to st
 Front-End Live At : https://swiftrut-task-9.vercel.app/
 Back-End Live At : https://swiftrut-task-9.onrender.com/api/
 
+
+admin Login role : 
+email : admin@gmail.com 
+password : 123
+
+
 ⚙️ Installation & Setup
 Backend Setup
 1 Clone the repository:

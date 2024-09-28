@@ -23,6 +23,7 @@ import CourseDetails from "./pages/CourseDetails";
 import AllCoursesForStudents from "./pages/AllCoursesForStudents";
 import EnrolledCourses from "./pages/EnrolledCourses"; // New import for enrolled courses
 import EnrollStudent from "./pages/EnrollStudent";
+import ViewGrade from "./pages/ViewGrade";
 
 const App = () => {
   return (
@@ -160,6 +161,15 @@ const App = () => {
                 element={
                   <ProtectedRoute role="Student">
                     <EnrolledCourses />
+                  </ProtectedRoute>
+                }
+              />
+              {/* New route for viewing grades */}
+              <Route
+                path="/course/:courseId/grades"
+                element={
+                  <ProtectedRoute role="Student">
+                    <ViewGrade />
                   </ProtectedRoute>
                 }
               />

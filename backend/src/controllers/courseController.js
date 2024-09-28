@@ -52,7 +52,13 @@ exports.getAllCourses = async (req, res) => {
 };
 exports.getCourseById = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id).populate("teacher");
+    const course = await Course.findById(req.params.id).populate(
+      "students",
+      "name email"
+    );
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
     res.status(200).json(course);
   } catch (error) {
     res.status(500).json({ message: "Server Error", error });

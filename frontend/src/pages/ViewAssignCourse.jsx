@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // Import Link to navigate to course details page
 import api from "../api/api"; // Assuming this is the axios instance with the baseURL and token
 
 const ViewAssignCourse = () => {
@@ -44,6 +45,13 @@ const ViewAssignCourse = () => {
             <p className="mt-2 text-gray-700">
               <strong>Enrolled Students:</strong> {course.students.length}
             </p>
+            {/* Add See Details button */}
+            <Link
+              to={`/courses/${course._id}`} // Pass course ID in the URL
+              className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+            >
+              See Details
+            </Link>
           </div>
         ))}
       </div>

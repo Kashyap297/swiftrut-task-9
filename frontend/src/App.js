@@ -17,6 +17,7 @@ import AllCourses from "./pages/AllCourses"; // New import
 import EditCourse from "./pages/EditCourse";
 import AllStudents from "./pages/AllStudents"; // New import for students
 import ViewAssignCourse from "./pages/ViewAssignCourse";
+import CourseDetails from "./pages/CourseDetails";
 
 const App = () => {
   return (
@@ -68,6 +69,11 @@ const App = () => {
                     <ViewAssignCourse />
                   </ProtectedRoute>
                 }
+              />
+              // Define the routes
+              <Route
+                path="/courses/:id" // Dynamic route for course details based on course ID
+                element={<CourseDetails />}
               />
               <Route
                 path="/student"

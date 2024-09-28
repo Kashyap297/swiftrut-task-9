@@ -8,6 +8,7 @@ import {
   FaUser,
   FaAngleDown,
   FaAngleUp,
+  FaUserGraduate, // Import student icon
 } from "react-icons/fa"; // Import icons
 
 const Sidebar = () => {
@@ -17,6 +18,7 @@ const Sidebar = () => {
   // State to toggle the dropdowns
   const [teacherDropdownOpen, setTeacherDropdownOpen] = useState(false);
   const [courseDropdownOpen, setCourseDropdownOpen] = useState(false);
+  const [studentDropdownOpen, setStudentDropdownOpen] = useState(false); // New state for managing students
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -75,7 +77,7 @@ const Sidebar = () => {
               </div>
 
               {/* Manage Course Dropdown */}
-              <div>
+              <div className="mb-4">
                 <h3
                   className="font-semibold cursor-pointer flex justify-between items-center"
                   onClick={() => setCourseDropdownOpen(!courseDropdownOpen)}
@@ -104,6 +106,34 @@ const Sidebar = () => {
                         className="text-blue-300 hover:underline"
                       >
                         See All Courses
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+
+              {/* Manage Student Dropdown */}
+              <div>
+                <h3
+                  className="font-semibold cursor-pointer flex justify-between items-center"
+                  onClick={() => setStudentDropdownOpen(!studentDropdownOpen)}
+                >
+                  <span className="flex items-center">
+                    <FaUserGraduate className="mr-2" />
+                    Manage Student
+                  </span>
+                  <span>
+                    {studentDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}
+                  </span>
+                </h3>
+                {studentDropdownOpen && (
+                  <ul className="mt-2 pl-4">
+                    <li className="mb-2">
+                      <Link
+                        to="/students"
+                        className="text-blue-300 hover:underline"
+                      >
+                        View Students
                       </Link>
                     </li>
                   </ul>

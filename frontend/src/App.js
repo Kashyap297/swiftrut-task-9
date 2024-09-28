@@ -15,6 +15,7 @@ import AllTeachers from "./pages/AllTeachers"; // New import
 import CreateCourse from "./pages/CreateCourse"; // New import
 import AllCourses from "./pages/AllCourses"; // New import
 import EditCourse from "./pages/EditCourse";
+import AllStudents from "./pages/AllStudents"; // New import for students
 
 const App = () => {
   return (
@@ -108,6 +109,14 @@ const App = () => {
                 element={
                   <ProtectedRoute role="Admin">
                     <AllCourses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/students"
+                element={
+                  <ProtectedRoute role={["Admin", "Teacher"]}>
+                    <AllStudents />
                   </ProtectedRoute>
                 }
               />

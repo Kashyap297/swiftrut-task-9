@@ -19,6 +19,11 @@ import AllStudents from "./pages/AllStudents"; // New import for students
 import ViewAssignCourse from "./pages/ViewAssignCourse";
 import CourseDetails from "./pages/CourseDetails";
 
+// New imports for Student's courses and grades
+import AllCoursesForStudents from "./pages/AllCoursesForStudents";
+import EnrolledCourses from "./pages/EnrolledCourses"; // New import for enrolled courses
+import CourseGrades from "./pages/CourseGrades";
+
 const App = () => {
   return (
     <AuthProvider>
@@ -70,7 +75,7 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
-              // Define the routes
+              {/* Define the routes */}
               <Route
                 path="/courses/:id" // Dynamic route for course details based on course ID
                 element={<CourseDetails />}
@@ -83,7 +88,7 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
-              {/* New routes */}
+              {/* New routes for Admin */}
               <Route
                 path="/create-teacher"
                 element={
@@ -129,6 +134,32 @@ const App = () => {
                 element={
                   <ProtectedRoute role={["Admin", "Teacher"]}>
                     <AllStudents />
+                  </ProtectedRoute>
+                }
+              />
+              {/* New routes for Students */}
+              <Route
+                path="/all-courses"
+                element={
+                  <ProtectedRoute role="Student">
+                    <AllCoursesForStudents />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/enrolled-courses"
+                element={
+                  <ProtectedRoute role="Student">
+                    <EnrolledCourses />
+                  </ProtectedRoute>
+                }
+              />
+              {/* New route for CourseGrade */}
+              <Route
+                path="/course/:id/grades"
+                element={
+                  <ProtectedRoute role="Student">
+                    <CourseGrades />
                   </ProtectedRoute>
                 }
               />

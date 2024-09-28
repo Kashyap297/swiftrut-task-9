@@ -11,11 +11,28 @@ const CourseDetails = () => {
   const [grades, setGrades] = useState({}); // To store grades dynamically for each student
   const [successMessage, setSuccessMessage] = useState(null);
 
+  // Function to handle the input grade changes
+  const handleGradeChange = (studentId, grade) => {
+    setGrades({
+      ...grades,
+      [studentId]: grade, // Update the grade for the specific student
+    });
+  };
+
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
         const response = await api.get(`/courses/${id}`);
-        setCourse(response.data);
+        const courseData = response.data;
+
+        // Initialize grades for students who already have assigned grades
+        const initialGrades = {};
+        courseData.grades.forEach((grade) => {
+          initialGrades[grade.student] = grade.grade;
+        });
+
+        setCourse(courseData);
+        setGrades(initialGrades); // Set the grades state with existing grades
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch course details.");
@@ -25,13 +42,6 @@ const CourseDetails = () => {
 
     fetchCourseDetails();
   }, [id]);
-
-  const handleGradeChange = (studentId, grade) => {
-    setGrades({
-      ...grades,
-      [studentId]: grade, // Update the grade for the specific student
-    });
-  };
 
   const handleSaveGrade = async (studentId) => {
     try {
@@ -44,6 +54,13 @@ const CourseDetails = () => {
         studentId,
         grade,
       });
+
+      // Update the grades state with the new grade
+      setGrades({
+        ...grades,
+        [studentId]: grade,
+      });
+
       setSuccessMessage("Grade assigned successfully.");
       setError(null);
       setEditGrade(null); // Turn back to plain text after saving
@@ -98,13 +115,12 @@ const CourseDetails = () => {
                       <td className="py-4 px-6 border-b">{student.name}</td>
                       <td className="py-4 px-6 border-b">{student.email}</td>
                       <td className="py-4 px-6 border-b">
-                        {/* Display grade as text or input depending on the state */}
                         {editGrade === student._id ? (
                           <input
                             type="number"
                             className="border p-2 rounded w-full"
                             placeholder="Assign grade"
-                            value={grades[student._id] || ""}
+                            value={grades[student._id] || ""} // Check for the existing grade
                             onChange={(e) =>
                               handleGradeChange(student._id, e.target.value)
                             }
@@ -114,7 +130,10 @@ const CourseDetails = () => {
                             className="cursor-pointer"
                             onClick={() => setEditGrade(student._id)}
                           >
-                            {grades[student._id] || "No grade assigned"}
+                            {grades[student._id] !== undefined
+                              ? grades[student._id]
+                              : "No grade assigned"}{" "}
+                            {/* Show existing grade */}
                           </span>
                         )}
                       </td>

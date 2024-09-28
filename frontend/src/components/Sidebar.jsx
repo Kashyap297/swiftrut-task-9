@@ -8,8 +8,8 @@ import {
   FaUser,
   FaAngleDown,
   FaAngleUp,
-  FaUserGraduate, // Import student icon
-  FaTachometerAlt, // Dashboard icon
+  FaUserGraduate,
+  FaTachometerAlt,
 } from "react-icons/fa"; // Import icons
 
 const Sidebar = () => {
@@ -214,6 +214,67 @@ const Sidebar = () => {
                         className="text-blue-300 hover:underline"
                       >
                         See All Students
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Student Dropdown */}
+          {user.role === "Student" && (
+            <div className="mb-6">
+              {/* View All Courses */}
+              <div className="mb-4">
+                <h3
+                  className="font-semibold cursor-pointer flex justify-between items-center"
+                  onClick={() => setCourseDropdownOpen(!courseDropdownOpen)}
+                >
+                  <span className="flex items-center">
+                    <FaBook className="mr-2" />
+                    View All Courses
+                  </span>
+                  <span>
+                    {courseDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}
+                  </span>
+                </h3>
+                {courseDropdownOpen && (
+                  <ul className="mt-2 pl-4">
+                    <li className="mb-2">
+                      <Link
+                        to="/all-courses"
+                        className="text-blue-300 hover:underline"
+                      >
+                        Enroll in Courses
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+
+              {/* View Enrolled Courses */}
+              <div>
+                <h3
+                  className="font-semibold cursor-pointer flex justify-between items-center"
+                  onClick={() => setStudentDropdownOpen(!studentDropdownOpen)}
+                >
+                  <span className="flex items-center">
+                    <FaUserGraduate className="mr-2" />
+                    View Enrolled Courses
+                  </span>
+                  <span>
+                    {studentDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}
+                  </span>
+                </h3>
+                {studentDropdownOpen && (
+                  <ul className="mt-2 pl-4">
+                    <li className="mb-2">
+                      <Link
+                        to="/enrolled-courses"
+                        className="text-blue-300 hover:underline"
+                      >
+                        See Your Enrolled Courses
                       </Link>
                     </li>
                   </ul>

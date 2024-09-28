@@ -195,3 +195,45 @@ exports.getCoursesForTeacher = async (req, res) => {
     res.status(500).json({ message: "Server Error", error });
   }
 };
+// Get all courses where the logged-in student is enrolled
+exports.getEnrolledCourses = async (req, res) => {
+  try {
+    // Find courses where the current student (req.user._id) is enrolled
+    const courses = await Course.find({ students: req.user._id }).populate(
+      "teacher",
+      "name email" // Populate teacher's name and email
+    );
+
+    if (!courses.length) {
+      return res.status(404).json({ message: "No courses enrolled" });
+    }
+
+    res.status(200).json(courses);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+// Fetch specific course grade for the logged-in student
+exports.getGradesByCourse = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.courseId).populate(
+      "grades.student",
+      "name email" // Populate student info in grades
+    );
+
+    // Filter grades for the logged-in student
+    const studentGrade = course.grades.find(
+      (grade) => grade.student._id.toString() === req.user._id.toString()
+    );
+
+    if (!studentGrade) {
+      return res
+        .status(404)
+        .json({ message: "No grade found for this student" });
+    }
+
+    res.status(200).json(studentGrade);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};

@@ -155,6 +155,15 @@ const Sidebar = () => {
                         See All Students
                       </Link>
                     </li>
+                    {/* New Link to enroll students */}
+                    <li className="mb-2">
+                      <Link
+                        to="/enroll-student"
+                        className="text-blue-300 hover:underline"
+                      >
+                        Enroll Student in Course
+                      </Link>
+                    </li>
                   </ul>
                 )}
               </div>

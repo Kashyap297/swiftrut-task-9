@@ -18,7 +18,8 @@ const {
   getCourseById,
   getCoursesForTeacher,
   getEnrolledCourses,
-  getGradesByCourse, // New function to get student's grades
+  getGradesByCourse,
+  enrollStudentInCourse, // New function to get student's grades
 } = require("../controllers/courseController");
 
 const router = express.Router();
@@ -59,4 +60,5 @@ router.get("/student/enrolled", protect, getEnrolledCourses);
 // Route for students to view their grades for a specific course
 router.get("/:courseId/student/grades", protect, getGradesByCourse);
 
+router.post("/:id/enroll-student", protect, admin, enrollStudentInCourse);
 module.exports = router;

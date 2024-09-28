@@ -22,6 +22,7 @@ import CourseDetails from "./pages/CourseDetails";
 // New imports for Student's courses and grades
 import AllCoursesForStudents from "./pages/AllCoursesForStudents";
 import EnrolledCourses from "./pages/EnrolledCourses"; // New import for enrolled courses
+import EnrollStudent from "./pages/EnrollStudent";
 
 const App = () => {
   return (
@@ -125,6 +126,15 @@ const App = () => {
                 element={
                   <ProtectedRoute role="Admin">
                     <AllCourses />
+                  </ProtectedRoute>
+                }
+              />
+              {/* Route for Enrolling Student */}
+              <Route
+                path="/enroll-student"
+                element={
+                  <ProtectedRoute role="Admin">
+                    <EnrollStudent />
                   </ProtectedRoute>
                 }
               />

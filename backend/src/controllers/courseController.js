@@ -237,3 +237,26 @@ exports.getGradesByCourse = async (req, res) => {
     res.status(500).json({ message: "Server Error", error });
   }
 };
+exports.enrollStudentInCourse = async (req, res) => {
+  try {
+    const { studentId } = req.body;
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found." });
+    }
+
+    // Check if the student is already enrolled
+    if (course.students.includes(studentId)) {
+      return res.status(400).json({ message: "Student is already enrolled." });
+    }
+
+    // Add the student to the course
+    course.students.push(studentId);
+    await course.save();
+
+    res.status(200).json({ message: "Student enrolled successfully." });
+  } catch (error) {
+    res.status(500).json({ message: "Server error." });
+  }
+};
